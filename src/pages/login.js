@@ -2,22 +2,20 @@ import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 import AppIcon from "../images/icon.png";
-import axios from "axios";
 import { Link } from "react-router-dom";
 
-/* MUI Stuff */
+// MUI Stuff
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
-/* Redux stuff */
+// Redux stuff
 import { connect } from "react-redux";
 import { loginUser } from "../redux/actions/userActions";
 
 const styles = (theme) => ({
-  ...theme.spreadThis,
+  ...theme,
 });
 
 class login extends Component {
@@ -29,9 +27,13 @@ class login extends Component {
       errors: {},
     };
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.UI.errors) {
+      this.setState({ errors: nextProps.UI.errors });
+    }
+  }
   handleSubmit = (event) => {
     event.preventDefault();
-
     const userData = {
       email: this.state.email,
       password: this.state.password,
@@ -48,7 +50,8 @@ class login extends Component {
       classes,
       UI: { loading },
     } = this.props;
-    const { errors, loading } = this.state;
+    const { errors } = this.state;
+
     return (
       <Grid container className={classes.form}>
         <Grid item sm />
@@ -101,7 +104,7 @@ class login extends Component {
             </Button>
             <br />
             <small>
-              Don't have an account ? Signup <Link to="/signup">Here</Link>
+              dont have an account ? sign up <Link to="/signup">here</Link>
             </small>
           </form>
         </Grid>
