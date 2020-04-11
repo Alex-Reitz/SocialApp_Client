@@ -29,9 +29,6 @@ class Navbar extends Component {
                   <HomeIcon color="primary" />
                 </MyButton>
               </Link>
-              <MyButton tip="Notifications">
-                <Notifications color="primary" />
-              </MyButton>
             </Fragment>
           ) : (
             <Fragment>
@@ -57,7 +54,7 @@ Navbar.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  authenticated: stata.user.authenticated,
+  authenticated: state.user.authenticated,
 });
 
 export default connect(mapStateToProps)(Navbar);
