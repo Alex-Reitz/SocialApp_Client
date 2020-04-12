@@ -24,7 +24,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         screams: action.payload,
-        loading: false,
       };
     case LIKE_SCREAM:
     case UNLIKE_SCREAM:

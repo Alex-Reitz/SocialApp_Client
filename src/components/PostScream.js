@@ -16,12 +16,14 @@ import CloseIcon from "@material-ui/icons/CloseIcon";
 import EditIcon from "@material-ui/icons/Edit";
 // Redux stuff
 import { connect } from "react-redux";
-import { postScream } from "../redux/actions/dataActions";
+import { postScream, clearErrors } from "../redux/actions/dataActions";
 
 const styles = (theme) => ({
   ...theme,
   submitButton: {
     position: "relative",
+    float: "right",
+    marginTop: 10,
   },
   progressSpinner: {
     position: "absolute",
@@ -33,7 +35,7 @@ const styles = (theme) => ({
   },
 });
 
-class PostScream extends component {
+class PostScream extends Component {
   state = {
     open: false,
     body: "",
@@ -46,16 +48,16 @@ class PostScream extends component {
       });
     }
     if (!nextProps.UI.errors && !nextProps.UI.loading) {
-      this.setState({ body: "" });
-      this.handleClose();
+      this.setState({ open: true, errors: {} });
     }
   }
   handleOpen = () => {
-    this.setState({ open: true, errors: {} });
+    this.setState({ open: true });
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.props.clearErrors();
+    this.setState({ open: false, errors: {} });
   };
   handleChange = (event) => {
     this.setState({
@@ -129,8 +131,9 @@ class PostScream extends component {
   }
 }
 
-PostScream.PropTypes = {
+PostScream.propTypes = {
   postScream: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   UI: PropTypes.object.isRequired,
 };
 
@@ -139,5 +142,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(
-  (mapStateToProps, { postScream })(withStyles)(styles)(PostScream)
+  (mapStateToProps, { postScream, clearErrors })(withStyles)(styles)(PostScream)
 );
