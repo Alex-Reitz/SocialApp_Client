@@ -3,7 +3,9 @@ import {
   LIKE_SCREAM,
   UNLIKE_SCREAM,
   LOADING_DATA,
+  DELETE_SCREAM,
 } from "../types";
+import DeleteScream from "../../components/DeleteScream";
 const initialState = {
   screams: [],
   scream: {},
@@ -29,6 +31,14 @@ export default function (state = initialState, action) {
         (scream) => scream.screamId === action.payload.screamId
       );
       state.screams[index] = action.payload;
+      return {
+        ...state,
+      };
+    case DeleteScream:
+      index = state.screams.findIndex(
+        (scream) => scream.screamId === action.payload
+      );
+      state.screams.splice(index, 1);
       return {
         ...state,
       };
