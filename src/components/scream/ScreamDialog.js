@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
-import MyButton from "../util/MyButton";
+import MyButton from "../../util/MyButton";
 import dayjs from "dayjs";
 import LikeButton from "./LikeButton";
+import Comments from "./Comments";
 import { Link } from "react-router-dom";
 //MUI
 import Dialog from "@material-ui/core/Dialog";
@@ -16,7 +17,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import UnfoldMore from "@material-ui/icons/UnfoldMore";
 /* Redux */
 import { connect } from "react-redux";
-import { getScream } from "../redux/actions/dataActions";
+import { getScream } from "../../redux/actions/dataActions";
 
 const styles = (theme) => ({
   ...theme,
@@ -70,6 +71,7 @@ class ScreamDialog extends Component {
         commentCount,
         userImage,
         userHandle,
+        comments,
       },
       UI: { loading },
     } = this.props;
@@ -101,6 +103,8 @@ class ScreamDialog extends Component {
           <LikeButton screamId={screamId} />
           <span>{likeCount} comments</span>
         </Grid>
+        <hr className={classes.visibleSeparator} />
+        <Comment comment={comments} />
       </Grid>
     );
 

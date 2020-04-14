@@ -4,7 +4,7 @@ import "./App.css";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import createTheme from "@material-ui/core/styles/createMuiTheme";
 // Components
-import Navbar from "./components/Navbar";
+import Navbar from "./components/layout/Navbar";
 import AuthRoute from "./util/AuthRoute";
 // Pages
 import home from "./pages/home";
