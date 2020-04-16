@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
-/* Mui */
+// MUI Stuff
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-/* Redux */
+// Redux stuff
 import { connect } from "react-redux";
 import { submitComment } from "../../redux/actions/dataActions";
 
@@ -16,16 +16,18 @@ const styles = (theme) => ({
 class CommentForm extends Component {
   state = {
     body: "",
-    errors,
+    errors: {},
   };
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors) {
       this.setState({ errors: nextProps.UI.errors });
     }
-    if (!nextProps.UI.errors && nextProps.UI.loading) {
+    if (!nextProps.UI.errors && !nextProps.UI.loading) {
       this.setState({ body: "" });
     }
   }
+
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -33,6 +35,7 @@ class CommentForm extends Component {
     event.preventDefault();
     this.props.submitComment(this.props.screamId, { body: this.state.body });
   };
+
   render() {
     const { classes, authenticated } = this.props;
     const errors = this.state.errors;
@@ -43,10 +46,10 @@ class CommentForm extends Component {
           <TextField
             name="body"
             type="text"
-            label="Comment on Scream"
+            label="Comment on scream"
             error={errors.comment ? true : false}
             helperText={errors.comment}
-            calue={this.state.body}
+            value={this.state.body}
             onChange={this.handleChange}
             fullWidth
             className={classes.textField}
@@ -68,7 +71,7 @@ class CommentForm extends Component {
 }
 
 CommentForm.propTypes = {
-  submitComment: propTypes.func.isRequired,
+  submitComment: PropTypes.func.isRequired,
   UI: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   screamId: PropTypes.string.isRequired,
@@ -77,7 +80,7 @@ CommentForm.propTypes = {
 
 const mapStateToProps = (state) => ({
   UI: state.UI,
-  authenicated: state.user.authenticated,
+  authenticated: state.user.authenticated,
 });
 
 export default connect(mapStateToProps, { submitComment })(

@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import MyButton from "../../util/MyButton";
-
 // MUI Stuff
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -11,9 +10,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import AddIcon from "@material-ui/icons/Add";
-import CloseIcon from "@material-ui/icons/CloseIcon";
-// Icons
-import EditIcon from "@material-ui/icons/Edit";
+import CloseIcon from "@material-ui/icons/Close";
 // Redux stuff
 import { connect } from "react-redux";
 import { postScream, clearErrors } from "../../redux/actions/dataActions";
@@ -30,8 +27,8 @@ const styles = (theme) => ({
   },
   closeButton: {
     position: "absolute",
-    left: "90%",
-    top: "10%",
+    left: "91%",
+    top: "6%",
   },
 });
 
@@ -48,21 +45,18 @@ class PostScream extends Component {
       });
     }
     if (!nextProps.UI.errors && !nextProps.UI.loading) {
-      this.setState({ open: true, errors: {} });
+      this.setState({ body: "", open: false, errors: {} });
     }
   }
   handleOpen = () => {
     this.setState({ open: true });
   };
-
   handleClose = () => {
     this.props.clearErrors();
     this.setState({ open: false, errors: {} });
   };
   handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
+    this.setState({ [event.target.name]: event.target.value });
   };
   handleSubmit = (event) => {
     event.preventDefault();
@@ -76,8 +70,8 @@ class PostScream extends Component {
     } = this.props;
     return (
       <Fragment>
-        <MyButton onClick={this.handleOpen} tip="Post a scream!">
-          <CloseIcon />
+        <MyButton onClick={this.handleOpen} tip="Post a Scream!">
+          <AddIcon />
         </MyButton>
         <Dialog
           open={this.state.open}
@@ -98,13 +92,13 @@ class PostScream extends Component {
               <TextField
                 name="body"
                 type="text"
-                label="Scream!"
+                label="SCREAM!!"
                 multiline
                 rows="3"
-                placeholder="Scream at your friends!"
+                placeholder="Scream at your fellow apes"
                 error={errors.body ? true : false}
                 helperText={errors.body}
-                className={classes.TextField}
+                className={classes.textField}
                 onChange={this.handleChange}
                 fullWidth
               />
@@ -141,6 +135,6 @@ const mapStateToProps = (state) => ({
   UI: state.UI,
 });
 
-export default connect(
-  (mapStateToProps, { postScream, clearErrors })(withStyles)(styles)(PostScream)
+export default connect(mapStateToProps, { postScream, clearErrors })(
+  withStyles(styles)(PostScream)
 );

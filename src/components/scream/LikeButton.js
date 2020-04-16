@@ -2,12 +2,10 @@ import React, { Component } from "react";
 import MyButton from "../../util/MyButton";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-
-/* Icons */
+// Icons
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
-/* Redux */
-
+// REdux
 import { connect } from "react-redux";
 import { likeScream, unlikeScream } from "../../redux/actions/dataActions";
 
@@ -16,7 +14,7 @@ export class LikeButton extends Component {
     if (
       this.props.user.likes &&
       this.props.user.likes.find(
-        (like) => like.screamId === this.props.scream.screamId
+        (like) => like.screamId === this.props.screamId
       )
     )
       return true;
@@ -31,13 +29,13 @@ export class LikeButton extends Component {
   render() {
     const { authenticated } = this.props.user;
     const likeButton = !authenticated ? (
-      <MyButton tip="Like">
-        <Link to="/login">
+      <Link to="/login">
+        <MyButton tip="Like">
           <FavoriteBorder color="primary" />
-        </Link>
-      </MyButton>
+        </MyButton>
+      </Link>
     ) : this.likedScream() ? (
-      <MyButton tip="Undo Like" onClick={this.unlikeScream}>
+      <MyButton tip="Undo like" onClick={this.unlikeScream}>
         <FavoriteIcon color="primary" />
       </MyButton>
     ) : (
@@ -45,11 +43,7 @@ export class LikeButton extends Component {
         <FavoriteBorder color="primary" />
       </MyButton>
     );
-    const deleteButton =
-      authenticated && userHandle === handle ? (
-        <DeleteScream screamId={screamId} />
-      ) : null;
-    return LikeButton;
+    return likeButton;
   }
 }
 
@@ -69,4 +63,4 @@ const mapActionsToProps = {
   unlikeScream,
 };
 
-export default connect(mapStateToProps, mapActionToProps)(LikeButton);
+export default connect(mapStateToProps, mapActionsToProps)(LikeButton);

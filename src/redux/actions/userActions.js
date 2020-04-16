@@ -27,12 +27,6 @@ export const loginUser = (userData, history) => (dispatch) => {
     });
 };
 
-export const logoutUser = () => (dispatch) => {
-  localStorage.removeItem("FBIdToken");
-  delete axios.defaults.headers.common["Authorization"];
-  dispatch({ type: SET_UNAUTHENTICATED });
-};
-
 export const signupUser = (newUserData, history) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   axios
@@ -49,6 +43,12 @@ export const signupUser = (newUserData, history) => (dispatch) => {
         payload: err.response.data,
       });
     });
+};
+
+export const logoutUser = () => (dispatch) => {
+  localStorage.removeItem("FBIdToken");
+  delete axios.defaults.headers.common["Authorization"];
+  dispatch({ type: SET_UNAUTHENTICATED });
 };
 
 export const getUserData = () => (dispatch) => {
@@ -79,9 +79,20 @@ export const editUserDetails = (userDetails) => (dispatch) => {
   axios
     .post("/user", userDetails)
     .then(() => {
-      dispatch(getUserData);
+      dispatch(getUserData());
     })
-    .catch((err) => console.error(err));
+    .catch((err) => console.log(err));
+};
+
+export const markNotificationsRead = (notificationIds) => (dispatch) => {
+  axios
+    .post("/notifications", notificationIds)
+    .then((res) => {
+      dispatch({
+        type: MARK_NOTIFICATIONS_READ,
+      });
+    })
+    .catch((err) => console.log(err));
 };
 
 const setAuthorizationHeader = (token) => {

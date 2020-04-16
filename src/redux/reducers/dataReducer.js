@@ -5,9 +5,10 @@ import {
   LOADING_DATA,
   DELETE_SCREAM,
   POST_SCREAM,
+  SET_SCREAM,
   SUBMIT_COMMENT,
 } from "../types";
-import DeleteScream from "../../components/DeleteScream";
+
 const initialState = {
   screams: [],
   scream: {},
@@ -25,6 +26,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         screams: action.payload,
+        loading: false,
+      };
+    case SET_SCREAM:
+      return {
+        ...state,
+        scream: action.payload,
       };
     case LIKE_SCREAM:
     case UNLIKE_SCREAM:
@@ -38,7 +45,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
       };
-    case DeleteScream:
+    case DELETE_SCREAM:
       index = state.screams.findIndex(
         (scream) => scream.screamId === action.payload
       );

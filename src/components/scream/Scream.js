@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
-import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -8,20 +7,20 @@ import PropTypes from "prop-types";
 import MyButton from "../../util/MyButton";
 import DeleteScream from "./DeleteScream";
 import ScreamDialog from "./ScreamDialog";
-import { LikeButton } from "./LikeButton";
-/* Mui Stuff */
+import LikeButton from "./LikeButton";
+// MUI Stuff
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-
-/* Icons */
+import Typography from "@material-ui/core/Typography";
+// Icons
 import ChatIcon from "@material-ui/icons/Chat";
-
-/* Redux */
+// Redux
 import { connect } from "react-redux";
 
 const styles = {
   card: {
+    position: "relative",
     display: "flex",
     marginBottom: 20,
   },
@@ -30,7 +29,7 @@ const styles = {
   },
   content: {
     padding: 25,
-    object: "cover",
+    objectFit: "cover",
   },
 };
 
@@ -54,6 +53,10 @@ class Scream extends Component {
       },
     } = this.props;
 
+    const deleteButton =
+      authenticated && userHandle === handle ? (
+        <DeleteScream screamId={screamId} />
+      ) : null;
     return (
       <Card className={classes.card}>
         <CardMedia
@@ -61,7 +64,7 @@ class Scream extends Component {
           title="Profile image"
           className={classes.image}
         />
-        <CardContent class={classes.content}>
+        <CardContent className={classes.content}>
           <Typography
             variant="h5"
             component={Link}
@@ -79,9 +82,13 @@ class Scream extends Component {
           <span>{likeCount} Likes</span>
           <MyButton tip="comments">
             <ChatIcon color="primary" />
-            <span>{commentCount} Comments</span>
           </MyButton>
-          <ScreamDialog screamId={screamId} userHandle={userHandle} />
+          <span>{commentCount} comments</span>
+          <ScreamDialog
+            screamId={screamId}
+            userHandle={userHandle}
+            openDialog={this.props.openDialog}
+          />
         </CardContent>
       </Card>
     );
@@ -92,15 +99,11 @@ Scream.propTypes = {
   user: PropTypes.object.isRequired,
   scream: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
+  openDialog: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
   user: state.user,
 });
-
-const mapActionsToProps = {
-  likeScream,
-  unlikeScream,
-};
 
 export default connect(mapStateToProps)(withStyles(styles)(Scream));

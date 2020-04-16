@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
-
+// MUI
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
@@ -52,7 +52,7 @@ class Comments extends Component {
                         {dayjs(createdAt).format("h:mm a, MMMM DD YYYY")}
                       </Typography>
                       <hr className={classes.invisibleSeparator} />
-                      <Typography variant="body1">{body}</Typography>
+                      <Typography variabnt="body1">{body}</Typography>
                     </div>
                   </Grid>
                 </Grid>

@@ -4,18 +4,18 @@ import PropTypes from "prop-types";
 import AppIcon from "../images/icon.png";
 import { Link } from "react-router-dom";
 
-/* MUI Stuff */
+// MUI Stuff
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
-/* Import Redux */
+// Redux stuff
 import { connect } from "react-redux";
 import { signupUser } from "../redux/actions/userActions";
 
 const styles = (theme) => ({
-  ...theme.spreadThis,
+  ...theme,
 });
 
 class signup extends Component {
@@ -45,7 +45,7 @@ class signup extends Component {
       confirmPassword: this.state.confirmPassword,
       handle: this.state.handle,
     };
-    this.props.logoutUser(newUserData, this.props.history);
+    this.props.signupUser(newUserData, this.props.history);
   };
   handleChange = (event) => {
     this.setState({
@@ -58,13 +58,14 @@ class signup extends Component {
       UI: { loading },
     } = this.props;
     const { errors } = this.state;
+
     return (
       <Grid container className={classes.form}>
         <Grid item sm />
         <Grid item sm>
           <img src={AppIcon} alt="monkey" className={classes.image} />
           <Typography variant="h2" className={classes.pageTitle}>
-            Signup
+            SignUp
           </Typography>
           <form noValidate onSubmit={this.handleSubmit}>
             <TextField
@@ -127,14 +128,14 @@ class signup extends Component {
               className={classes.button}
               disabled={loading}
             >
-              Signup
+              SignUp
               {loading && (
                 <CircularProgress size={30} className={classes.progress} />
               )}
             </Button>
             <br />
             <small>
-              Already have an account? Login <Link to="/login">Here</Link>
+              Already have an account ? Login <Link to="/login">here</Link>
             </small>
           </form>
         </Grid>
@@ -148,7 +149,7 @@ signup.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired,
-  logoutUser: PropTypes.func.isRequired,
+  signupUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

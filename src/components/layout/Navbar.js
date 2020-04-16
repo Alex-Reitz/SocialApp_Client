@@ -4,20 +4,19 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import MyButton from "../../util/MyButton";
 import PostScream from "../scream/PostScream";
-
-/* MUI stuff */
+import Notifications from "./Notifications";
+// MUI stuff
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Button from "@material-ui/core/Button";
-/* Icon */
-import Notifications from "@material-ui/icons/Notifications";
+// Icons
 import HomeIcon from "@material-ui/icons/Home";
 
 class Navbar extends Component {
   render() {
-    const authenticated = this.props;
+    const { authenticated } = this.props;
     return (
-      <AppBar position="fixed">
+      <AppBar>
         <Toolbar className="nav-container">
           {authenticated ? (
             <Fragment>
